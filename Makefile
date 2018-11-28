@@ -1,15 +1,18 @@
-COL_NAME = Colleen
+COL_NAME	= Colleen
+GRA_NAME	= Grace
 
-CC	 = gcc
-CFLAG	 = -Wall -Wextra -Werror
+CC		= gcc
+CFLAG		= -Wall -Wextra -Werror
 
-all: $(COL_NAME)
+C_SRC		= C
+
+all: $(COL_NAME) $(GRA_NAME)
 
 $(COL_NAME):
-	$(CC) $(CFLAGS) C/Colleen.c -o $@
+	$(CC) $(CFLAGS) $(C_SRC) -o $@
 
 clean:
-	rm -fv $(COL_NAME)
+	rm -fv $(COL_NAME) $(GRA_NAME)
 
 fclean: clean
 
