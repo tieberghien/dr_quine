@@ -23,6 +23,6 @@ clean:
 	rm -rf *.o #Grace_kid.s Sully_*
 
 fclean: clean
-	rm -rf $(COLLEEN)
+	rm -rf $(COLLEEN) $(SULLY)
 
 re: fclean all

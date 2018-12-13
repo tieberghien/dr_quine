@@ -1,5 +1,3 @@
-%define MACH_SYSCALL(nb)	0x2000000 | nb
-
 section .text
 global _main
 extern _printf
@@ -10,15 +8,25 @@ _main:
 	push rbp
 	mov rbp, rsp
 	sub rsp, 16
+;	lea rdi, [rel sully]
+;	push rax
+	mov rax, 5
+
+_loop:
+	cmp rax, 0
+	jle _done
+;	mov rdi, rsp
+	mov rsi, rax
 	lea rdi, [rel sully]
-	mov rsi, 5
 	call _printf
 	dec rsi
-	cmp rsi, 0
-;	call _fopen
+	mov rax, rsi
+	jmp _loop
+
+_done:
 	leave
-	ret	
+	ret
 
 section .data
 sully:
-	.string db "Sully_%d", 0
+	.string db "Sully_%d", 10
