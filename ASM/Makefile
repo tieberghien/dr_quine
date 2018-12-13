@@ -1,18 +1,23 @@
 COLLEEN = Colleen
 GRACE = Grace
+SULLY = Sully
 
 ASM = nasm
 ASMFLAGS = -f macho64
 
-all: $(COLLEEN) $(GRACE)
+all: $(COLLEEN) $(SULLY)
 
 $(COLLEEN): Colleen.s
 	$(ASM) $(ASMFLAGS) $^ 
 	$(CC) -o $@ Colleen.o
 
-$(GRACE): Grace.s
+#$(GRACE): Grace.s
+#	$(ASM) $(ASMFLAGS) $^
+#	$(CC) -o $@ Grace.o
+
+$(SULLY): Sully.s
 	$(ASM) $(ASMFLAGS) $^
-	$(CC) -o $@ Grace.o
+	$(CC) -o $@ Sully.o
 
 clean:
 	rm -rf *.o #Grace_kid.s Sully_*
