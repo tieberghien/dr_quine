@@ -20,6 +20,7 @@ $(SUL_NAME):
 
 clean:
 	rm -fv $(COL_NAME) $(GRA_NAME) $(SUL_NAME)
+	rm -rf %.o Grace_kid.c Sully_0 Sully_1 Sully_2 Sully_3 Sully_4 Sully_5 Sully_0.c Sully_1.c Sully_2.c Sully_3.c Sully_4.c Sully_5.c
 
 fclean: clean
 
