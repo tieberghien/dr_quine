@@ -1,10 +1,8 @@
 """
     Sublime
 """
-def func(): ret
+def func(): return
 def main():
-    x = '""""x = {!r};print(x.format(x))';print('{}'.format(chr(10)), x.format(x), chr(10))
-"""
-    Magnifique
-"""
+    x = '"""{:s}    Sublime{:s}"""{:s}def func(): return{:s}def main():{:s}    x = {!r};print(x.format(chr(10), chr(10), chr(10), chr(10), chr(10), x, chr(10), chr(10), chr(10), chr(10))){:s}    #Magnifique{:s}main()';print(x.format(chr(10), chr(10), chr(10), chr(10), chr(10), x, chr(10), chr(10), chr(10), chr(10)))
+    #Magnifique
 main()
