@@ -1,30 +1,27 @@
-section .text
-	global _start          ;must be declared for linker (ld)
+extern _open
+%define WRCREAT_TRUNC  0x0001 | 0x0200 | 0x0400
+%define S_IRWXU 0644o
 
-_start:                ;tell linker entry point
-	mov rdi, filename
-	mov rsi, 0102o     ;O_CREAT, man open
-	mov rdx, 0666o     ;umode_t
-	mov rax, 2
-	syscall
+%macro FT 0
+global _main
+_main:
+push rbp
+mov rbp, rsp
+sub rsp, 16
+lea rdi, [rel kid]
+mov rsi, WRCREAT_TRUNC
+mov rdx, S_IRWXU
+call _open
+cmp rax, -1
+je _return
 
-	mov [fd], rax
-	mov rdx, len       ;message length
-	mov rsi, msg       ;message to write
-	mov rdi, [fd]      ;file descriptor
-	mov rax, 1         ;system call number (sys_write)
-	syscall            ;call kernel
-
-	mov rdi, [fd]
-	mov rax, 3         ;sys_close
-	syscall
-
-	mov rax, 60        ;system call number (sys_exit)
-	syscall            ;call kernel
-
+_return:
+mov rsp, rbp
+pop rbp
+ret
+%endmacro
 section .data
-	msg db 'Hello, world', 0xa
-	len equ $ - msg
-	filename db 'test.txt', 0
-	lenfilename equ $ - filename
-	fd dq 0
+str: db "section .text"
+kid: db "Grace_kid.s"
+section .text
+FT

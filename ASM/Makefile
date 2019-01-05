@@ -5,24 +5,24 @@ SULLY = Sully
 ASM = nasm
 ASMFLAGS = -f macho64
 
-all: $(COLLEEN) $(SULLY)
+all: $(COLLEEN) $(GRACE) $(SULLY)
 
 $(COLLEEN): Colleen.s
 	$(ASM) $(ASMFLAGS) $^ 
 	$(CC) -o $@ Colleen.o
 
-#$(GRACE): Grace.s
-#	$(ASM) $(ASMFLAGS) $^
-#	$(CC) -o $@ Grace.o
+$(GRACE): Grace.s
+	$(ASM) $(ASMFLAGS) $^
+	$(CC) -o $@ Grace.o
 
 $(SULLY): Sully.s
 	$(ASM) $(ASMFLAGS) $^
 	$(CC) -o $@ Sully.o
 
 clean:
-	rm -rf *.o #Grace_kid.s Sully_*
+	rm -rf *.o Grace_kid.s #Sully_*
 
 fclean: clean
-	rm -rf $(COLLEEN) $(SULLY)
+	rm -rf $(COLLEEN) $(GRACE) $(SULLY)
 
 re: fclean all
