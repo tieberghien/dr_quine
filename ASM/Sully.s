@@ -28,6 +28,8 @@ _main:
 	lea rdi, [rel string_s]
 	lea rsi, [rel filename]
 	mov rdx, [rel initial]
+	inc rdx
+	mov [rel initial], rdx
 	call _asprintf
 
 	mov rdi, [rel string_s]
@@ -89,7 +91,7 @@ _stop:
 	ret
 
 section .data
-	data db "%%define WRCREAT_TRUNC  0x0001 | 0x0200 | 0x0400%c%c%%macro FT 1%c;such comment wow%csection .text%c	global _main%c	extern _dprintf%c	extern _asprintf%c	extern _open%c	extern _close%c	extern _memcpy%c	extern _system%c%c_main:%c	push rbp%c	mov rdx, [rel initial]%c	cmp rdx, 0%c	jle _stop%c	mov rdx, [rel initial]%c	dec rdx%c	mov [rel initial], rdx%c%c	lea rdi, [rel base_text]%c	lea rsi, [rel data]%c	mov rdx, len%c	call _memcpy%c%c	lea rdi, [rel string_s]%c	lea rsi, [rel filename]%c	mov rdx, [rel initial]%c	call _asprintf%c%c	mov rdi, [rel string_s]%c	mov rsi, WRCREAT_TRUNC%c	mov rdx, 0644o%c	call _open%c	push rax%c%c	lea rdi, [rel data]%c	mov rax, 37%c	mov rcx, len - 1%c	call _replace%c%c	pop rdi%c	push rdi%c	lea rsi, [rel data]%c	lea rdx, [rel dquote]%c	lea rcx, [rel base_text]%c	lea r8, [rel dquote]%c	mov r9, [rel initial]%c	sub rsp, 8%c	push r8%c	push r8%c	push r8%c	push r8%c	call _dprintf%c	pop r8%c	pop r8%c	pop r8%c	pop r8%c	add rsp, 8%c	pop rdi%c	call _close%c%c	lea rdi, [rel exec_string]%c	lea rsi, [rel exec]%c	mov rdx, [rel initial]%c	mov rcx, [rel initial]%c	mov r8, [rel initial]%c	mov r9, [rel initial]%c	call _asprintf%c%c	mov rdi, [rel exec_string]%c	call _system%c	pop rbp%c	ret%c%c_replace:%c	repne scasb%c	cmp byte [rel rdi], 99%c	jne _replace%c	mov byte [rel rdi], 10%c	cmp rcx, 0%c	jne _replace%c	ret%c%c_stop:%c	pop rbp%c	ret%c%csection .data%c	data db %s%s%s, 0%c%c	len equ $ - data - 1%c	dquote db 34, 0%c	filename db %%1, 0%c	initial dq %hhd%c	exec db %snasm -f macho64 Sully_%%hhd.s && ld Sully_%%hhd.o -o Sully_%%hhd -macosx_version_min 10.8 -lSystem; ./Sully_%%hhd%s, 0%c%csection .bss%c	base_text resb len%c	exec_name resb 10%c	exec_string resb 4%c	string_s resb 4%c%c%%endmacro%c%cFT %sSully_%%hhd.s%s%c", 0
+	data db "%%define WRCREAT_TRUNC  0x0001 | 0x0200 | 0x0400%c%c%%macro FT 1%c;such comment wow%csection .text%c	global _main%c	extern _dprintf%c	extern _asprintf%c	extern _open%c	extern _close%c	extern _memcpy%c	extern _system%c%c_main:%c	push rbp%c	mov rdx, [rel initial]%c	cmp rdx, 0%c	jle _stop%c	mov rdx, [rel initial]%c	dec rdx%c	mov [rel initial], rdx%c%c	lea rdi, [rel base_text]%c	lea rsi, [rel data]%c	mov rdx, len%c	call _memcpy%c%c	lea rdi, [rel string_s]%c	lea rsi, [rel filename]%c	mov rdx, [rel initial]%c	call _asprintf%c%c	mov rdi, [rel string_s]%c	mov rsi, WRCREAT_TRUNC%c	mov rdx, 0644o%c	call _open%c	push rax%c%c	lea rdi, [rel data]%c	mov rax, 37%c	mov rcx, len - 1%c	call _replace%c%c	pop rdi%c	push rdi%c	lea rsi, [rel data]%c	lea rdx, [rel dquote]%c	lea rcx, [rel base_text]%c	lea r8, [rel dquote]%c	mov r9, [rel initial]%c	sub rsp, 8%c	push r8%c	push r8%c	push r8%c	push r8%c	call _dprintf%c	pop r8%c	pop r8%c	pop r8%c	pop r8%c	add rsp, 8%c	pop rdi%c	call _close%c%c	lea rdi, [rel exec_string]%c	lea rsi, [rel exec]%c	mov rdx, [rel initial]%c	mov rcx, [rel initial]%c	mov r8, [rel initial]%c	mov r9, [rel initial]%c	call _asprintf%c%c	mov rdi, [rel exec_string]%c	call _system%c	pop rbp%c	ret%c%c_replace:%c	repne scasb%c	cmp byte [rel rdi], 99%c	jne _replace%c	mov byte [rel rdi], 10%c	cmp rcx, 0%c	jne _replace%c	ret%c%c_stop:%c	pop rbp%c	ret%c%csection .data%c	data db %s%s%s, 0%c%c	len equ $ - data - 1%c	dquote db 34, 0%c	filename db %%1, 0%c	initial dq %hhd%c	exec db %snasm -f macho64 Sully_%%hhd.s && ld Sully_%%hhd.o -o Sully_%%hhd -macosx_version_min 10.8 -lSystem; ./Sully_%%hhd%s, 0%c%csection .bss%c	base_text resb len%c	exec_name resb 10%c	exec_string resb 5%c	string_s resb 5%c%c%%endmacro%c%cFT %sSully_%%hhd.s%s%c", 0
 
 	len equ $ - data - 1
 	dquote db 34, 0
@@ -100,8 +102,8 @@ section .data
 section .bss
 	base_text resb len
 	exec_name resb 10
-	exec_string resb 4
-	string_s resb 4
+	exec_string resb 5
+	string_s resb 5
 
 %endmacro
 
